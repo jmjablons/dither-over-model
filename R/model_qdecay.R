@@ -1,4 +1,7 @@
 # q-decay -----------------------------------------------------------------
+current_trial <- NULL
+current_tag <- NULL
+
 model <- function(par, a) {
   a = a[with(a, order(start)), ]
   nll = 0
@@ -16,7 +19,9 @@ model <- function(par, a) {
     nows.end = a$end
     intervals = a$intervalb
     intervals[1] = 0
+    current_tag <<- unique(a$tag)
     for (i in seq_along(sides)) {
+      current_trial <<- i
       r = rewards[i]
       s = sides[i]
       now.start = nows.start[i]

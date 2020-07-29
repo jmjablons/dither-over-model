@@ -8,7 +8,7 @@ asinh_trans <- function() {
             transform = asinh,
             inverse   = sinh)}
 
-remodel %>% 
+tplot <- remodel %>% 
   purrr::map(~select(., name, aic, tag)) %>%
   bind_rows() %>%
   group_by(tag) %>%
@@ -31,7 +31,9 @@ remodel %>%
   scale_y_continuous(
     trans = 'asinh',
     expand = c(0,0),
-    limits = c(0, 10^4),
+    limits = c(-(10^4), 10^4),
     breaks = c(-(10^(1:4)), 10^(1:4)),
     labels = latex2exp::TeX(c(paste("$-10^{",1:4, "}$", sep = ""),
                               paste("$10^{",1:4, "}$", sep = ""))))
+
+ggsave("model_result.pdf", plot = tplot, device = cairo_pdf, width = 5, height = 4)
