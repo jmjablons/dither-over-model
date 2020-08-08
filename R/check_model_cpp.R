@@ -1,5 +1,6 @@
 #sourceCpp("./cpp/loopC.cpp")
 sourceCpp("./cpp/model_basic.cpp")
+sourceCpp("./cpp/model_dual.cpp")
 
 # any data passed to modelC are allowed to NA values,
 # NA is subversed to double value!
@@ -18,3 +19,9 @@ bench::mark(
 
 all.equal(temp %>% arrange(tag),
           remodel$basic %>% arrange(tag))
+
+wrapmodel(alpha = init$default, beta = init$beta, .input = dx) %>%
+  util_finish("basic")
+
+wrapmodel(alpha.pos = init$default, beta = init$beta, alpha.neg = init$default, .input = dx) %>%
+  util_finish("dual")

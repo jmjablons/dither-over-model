@@ -1,41 +1,33 @@
-getaic <- function(n.parameters, nll) {2 * nll + 2 * n.parameters}
+parsedata <- function(.tag, .input){
+  temp <- .input[.input$tag == .tag,]
+  temp = temp[with(temp, order(start)),]
+  temp[c("dooropened","side")]}
 
-getoptimal_ <- function(dataset, list.parameters){ #one parameter
-  out = c(tag = as.numeric(unique(dataset$tag)), 
-          par = 0, value = Inf, maxPar = 0)
-  for(i in list.parameters){
-    value = model(i, dataset)
-    out[4] = i
-    if(value < out[3]){
-      out[2] = i
-      out[3] = value}}
-  out}
+getoptimal <- function(.param, .input, .fun) {
+  nparam = length(.param)
+  if(nparam > 2){max = c(1, 50, rep(1, (nparam - 2)))}
+  temp <- apply(.param, 1, function(x){
+    optim(par = x, fn = .fun, reward = .input$dooropened, side = .input$side, 
+          method="L-BFGS-B", lower = rep(0, nparam), upper = max)})
+  unlist(temp[[which.min(lapply(temp,function(x) {unlist(x$value)}))]][-5])}
 
-getoptimal <- function(input.data, list.parameters) {
-  optim.results <- list()
-  sample.size = nrow(list.parameters)
-  val = Inf
-  mouse = as.numeric(unique(input.data$tag))
-  ireward = input.data$dooropened #here
-  iside = (ceiling(input.data$corner/2)-1) #here
-  temp <- apply(list.parameters, 1, function(x){
-    optim(par = x, fn = modelC, reward = ireward, side = iside)}) #here
-  best.optim <- temp[[which.min(lapply(temp,function(x) {unlist(x$value)}))]]
-  c(tag = mouse, unlist(best.optim))}
-
-wrapmodel <- function(list.parameters, a = dmodel, tags = NULL) {
-  if(is.null(tags)){tags = as.character(unique(a$tag))}
-  progressbar <- txtProgressBar(0, length(tags), char = '*', style = 3)
-  output = list()
+wrapmodel <- function(..., .input = dmodel, .fun = modelC) {
+  initial <- expand.grid(...)
+  tags <- unique(.input$tag)
+  progressbar <- txtProgressBar(0, length(tags), char = '$', style = 3)
+  output = vector("list", length = length(tags))
   for(m in seq_along(tags)) {
-    dmouse = a[a$tag == tags[m], ]
-    output[[m]] = getoptimal(dmouse, list.parameters)
+    mouse = tags[m]
+    dmouse <- parsedata(mouse, .input)
+    output[[m]] = c(getoptimal(initial, dmouse, .fun), 
+                    tag = as.numeric(mouse))
     setTxtProgressBar(progressbar, m)}
   close(progressbar)
   do.call(rbind, output)}
 
-util_wrap <- function(name, ...){
-  initial <- expand.grid(...)
-  wrapmodel2(initial) %>% as_tibble() %>%
-    mutate(name = name, tag = as.character(tag),
-           aic = getaic(length(initial), value))}
+util_finish <- function(.modelresult, .name){
+  tibble::as_tibble(.modelresult) %>%
+    dplyr::mutate(name = .name, 
+                  tag = as.character(tag),
+                  aic = (2 * length(which(grepl("par", names(.)))) + 
+                           (2 * value)))}
