@@ -15,7 +15,7 @@ double modelC(NumericVector par, NumericVector reward, NumericVector side, Numer
     pw = (exp(beta * q[s])) / (exp(beta * q[0]) + exp(beta * q[1]));
     pw = std::min(pw, 0.999);
     pw = std::max(pw, 0.001);
-  nll += -log(pw);
+    nll += -log(pw);
     pe = r - q[s];
     q[s] += (par[0] * pe);}
 return nll;}
