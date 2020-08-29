@@ -1,8 +1,0 @@
-source("./R/model_dual.R")
-source("./R/model_attention.R")
-source("./R/model_fictitious.R")
-source("./R/model_hybrid.R")
-source("./R/model_noisywinstay.R")
-source("./R/model_forgetful.R")
-source("./R/model_qdecay.R")
-source("./R/model_Bdecay.R")

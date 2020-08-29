@@ -1,5 +1,3 @@
-getaic <- function(n.parameters, nll) {2 * nll + 2 * n.parameters}
-
 getoptimal_ <- function(dataset, list.parameters){ #one parameter
   out = c(tag = as.numeric(unique(dataset$tag)), 
           par = 0, value = Inf, maxPar = 0)
