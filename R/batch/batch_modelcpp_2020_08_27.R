@@ -30,6 +30,22 @@ sourceCpp("./cpp/model_hybrid.cpp")
 result_model$hybrid <- wrapmodel(alpha.pos = init$default, beta = init$beta, alpha.neg = init$default, .input = dmodel) %>%  
   util_finish("hybrid")
 
+sourceCpp("./cpp/model/model_hybrid_original.cpp")
+
+result_model$hybrid_original <- wrapmodel(alpha.pos = init$default, beta = init$beta, alpha.neg = init$default, .input = dmodel) %>%  
+  util_finish("hybrid_original")
+
+sourceCpp("./cpp/model/model_hybrid_imaginary.cpp")
+
+result_model$hybrid_imaginary <- wrapmodel(
+  alpha.pos.real = init$default, 
+  beta = init$beta, 
+  alpha.neg.real = init$default, 
+  alpha.pos.fict = init$default, 
+  alpha.neg.fict = init$default, 
+  .input = dmodel) %>%  
+  util_finish("hybrid_imaginary")
+
 sourceCpp("./cpp/model_qdecay.cpp")
 
 dmodel = dmodel %>%
