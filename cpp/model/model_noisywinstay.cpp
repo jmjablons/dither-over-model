@@ -4,7 +4,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double modelC(NumericVector par, NumericVector side, NumericVector win, NumericVector stay){
   double p[2] = {0.5, 0.5}, nll = 0.0;
-  short int n = side.size(), s;
+  short int n = side.size(), s, wi, st;
   for(int i = 0; i < n; i++){
     s = side[i];
     wi = win[i];
