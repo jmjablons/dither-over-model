@@ -30,8 +30,8 @@ run_predict_reward_side_interval <- function(name, a = dmodel, a_model = result_
     out[[i]] <- (dmouse %>% mutate(probchosen = ifelse(side %in% 0, prob0, 1-prob0)))}
   return(dplyr::bind_rows(out))}
 
-summary_predict <- function(.fun = run_predict_reward_side, .which = which){
-  .fun(which) %>%
+summary_predict <- function(.fun = run_predict_reward_side, .which = which, ...){
+  .fun(which, ...) %>%
     group_by(tag) %>%
     summarise(correctprediction = length(which(probchosen > 0.5))/n()) %>%
     mutate(name = which)}
