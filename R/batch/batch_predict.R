@@ -18,6 +18,10 @@ sourceCpp("cpp/predict/predict_hybrid_original.cpp")
 which = "hybrid_original"
 resultprediction[[which]] <- summary_predict()
 
+sourceCpp("cpp/predict/predict_hybrid_imaginary.cpp")
+which = "hybrid_imaginary"
+resultprediction[[which]] <- summary_predict()
+
 sourceCpp("cpp/predict/predict_attention.cpp")
 which = "attention"
 resultprediction[[which]] <- summary_predict()
@@ -31,3 +35,5 @@ which = "qdecay"
 resultprediction[[which]] <- summary_predict(run_predict_reward_side_interval)
 
 sourceCpp("cpp/predict/predict_noisywinstay.cpp")
+which = "noisywinstay"
+resultprediction[[which]] <- summary_predict(run_predict_side_win_stay)

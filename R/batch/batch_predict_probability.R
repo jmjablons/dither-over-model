@@ -45,4 +45,4 @@ prediction[[which]] <- run_predict_reward_side_interval(which) %>%
   mutate(name = which)
 
 prediction %>%
-  saveRDS("../inteli-black/data/result_predict_pwhole_inteli_black_20200928.rds")
+  saveRDS("../inteli-black/data/result_predict_pwhole_inteli_black_20201001.rds")
