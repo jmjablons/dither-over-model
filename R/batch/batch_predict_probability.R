@@ -1,7 +1,6 @@
-resultprediction %>%
-  saveRDS("result/result_predict_inteli_black_20200925.rds")
-
+source("R/util_eval/util_init_predict.R")
 prediction <- list()
+result_model = remodel
 
 sourceCpp("cpp/predict/predict_basic.cpp")
 which = "basic"
@@ -46,4 +45,4 @@ prediction[[which]] <- run_predict_reward_side_interval(which) %>%
   mutate(name = which)
 
 prediction %>%
-  saveRDS("result/result_predict_pwhole_inteli_black_20200928.rds")
+  saveRDS("../inteli-black/data/result_predict_pwhole_inteli_black_20200928.rds")

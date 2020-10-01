@@ -35,6 +35,13 @@ result_model$fictitious <- wrapmodel(alpha = init$default,
 #                                  .input = dmodel) %>%  
 #   util_finish("hybrid")
 
+sourceCpp("./cpp/model/model_attention.cpp")
+result_model$attention <- wrapmodel(alpha0 = init$default, 
+                                beta = init$beta, 
+                                mi = init$default,
+                                .input = dmodel) %>%  
+  util_finish("attention")
+
 sourceCpp("./cpp/model/model_hybrid_original.cpp")
 result_model$hybrid_original <- wrapmodel(alpha.pos = init$default, 
                                           beta = init$beta, 
@@ -82,4 +89,5 @@ result_model$noisywinstay <- run_noisywinstay(temp) %>%
 
 finish <- Sys.time()
 print(difftime(finish,start))
-saveRDS(result_model, "result/result_model_inteli_black_20200930.rds")
+#saveRDS(result_model, "result/result_model_inteli_black_20201001.rds")
+saveRDS(result_model, "../inteli-black/data/result_model_inteli_black_20201001.rds")
