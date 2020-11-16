@@ -1,5 +1,5 @@
 sourceCpp("./cpp/model/model_noisywinstay.cpp")
-dmodel = readRDS("../skinner-ThpCreERT2-NR1/data/wsad_dmodel_modelcpp_skiner_20200903.rds")
+#dmodel = readRDS("../skinner-ThpCreERT2-NR1/data/wsad_dmodel_modelcpp_skiner_20201116.rds")
 
 temp <- dmodel %>%
   mutate(win = lag(dooropened),
@@ -23,7 +23,7 @@ getoptimal_ <- function(dataset, list.parameters){ #one parameter
       out[3] = value}}
   out}
 
-remodel[["noisywinstay"]] <- (function(initial, a = temp) {
+result_model$noisywinstay <- (function(initial, a = temp) {
     tags = unique(a$tag)
     output = list()
     for (m in tags) {
