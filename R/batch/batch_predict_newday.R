@@ -23,8 +23,9 @@ which = "attention"
 temp_predict_animalxmodel[[which]] <- summary_predict()
 
 sourceCpp("cpp/predict/predict_noisywinstay.cpp")
+source("R/util_eval/util_prepare_date_winstay.R")
 which = "noisywinstay"
 temp_predict_animalxmodel[[which]] <- summary_predict(run_predict_side_win_stay)
 
 temp_predict_animalxmodel %>%
-  saveRDS(paste0("result/result_predict_animalxmodel_tph2_skinner_", today(),".rds"))
+  saveRDS(paste0("result/result_predict_animalxmodel_tph2_skinner_",lubridate::today(),".rds"))

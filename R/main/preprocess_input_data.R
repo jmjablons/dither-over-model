@@ -1,10 +1,11 @@
+cat("Choose -dmodel- file: to preprocess into dither-over-model input data")
 dmodel <- readRDS(file.choose())
 
 dmodel = dmodel %>% 
   select(start, end, tag, dooropened, corner) %>%
   group_by(tag) %>%
   arrange(start, .by_group = TRUE) %>%
-  mutate(interval = as.numeric(difftime(start - lag(end), units = 'mins'))) %>%
+  mutate(interval = as.numeric(difftime(start, lag(end), units = 'mins'))) %>%
   ungroup() %>%
   mutate(
     corner = as.numeric(corner),
