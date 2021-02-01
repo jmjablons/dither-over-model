@@ -19,10 +19,10 @@ double modelC(NumericVector par, NumericVector reward, NumericVector side){
     pe = r - q[s];
     q[s] += (param_pos * pe);
     pe = (1-r) - q[vs];
-    q[vs] += (param_neg * pe);
+    q[vs] += (param_pos * pe);
   } else {
     pe = r - q[s];
     q[s] += (param_neg * pe);
     pe = (1-r) - q[vs];
-    q[vs] += (param_pos * pe);}}
+    q[vs] += (param_neg * pe);}}
 return nll;}
