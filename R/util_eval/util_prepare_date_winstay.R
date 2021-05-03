@@ -1,6 +1,6 @@
 prepare_data_winstay <- function(a = dmodel){
   a %>% group_by(tag) %>%
-    arrange(start) %>%
+    arrange(start, .by_group = T) %>%
     mutate(win = lag(dooropened),
            stay = ifelse(lag(side) == side, 1, 0)) %>%
     ungroup() %>%
