@@ -47,8 +47,8 @@ run_predict_side_win_stay <- function(name, a = dmodel, a_model = result_model){
     out[[i]] <- (dmouse %>% mutate(probchosen = ifelse(side %in% 0, prob0, 1-prob0)))}
   return(dplyr::bind_rows(out))}
 
-summary_predict <- function(.fun = run_predict_reward_side, .which = which, ...){
-  .fun(which, ...) %>%
+summary_predict <- function(.fun = run_predict_reward_side, .which = temp_which, ...){
+  .fun(.which, ...) %>%
     group_by(tag) %>%
     summarise(correctprediction = length(which(probchosen > 0.5))/n()) %>%
-    mutate(name = which)}
+    mutate(name = .which)}
