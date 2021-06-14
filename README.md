@@ -4,10 +4,6 @@ Apply q-learning models to experimental dataset; complete analysis code with cus
 ## Usage
 
 ```{r}
-dmodel <- {provide data}
 dir.create('result')
-source("/R/dependency.R")
-source("/R/util.R")
-source("/R/variable.R")
-source("/R/model_batch.R")
+source("/R/model_batch_x.R")
 ```
